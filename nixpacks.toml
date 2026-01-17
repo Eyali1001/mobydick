@@ -1,6 +1,5 @@
 [phases.setup]
-nixPkgs = ["openssl_1_1", "pkg-config"]
-aptPkgs = ["libssl1.1"]
+nixPkgs = ["openssl", "pkg-config"]
 
 [phases.install]
 cmds = ["npm ci"]
