@@ -7,9 +7,10 @@
   "scripts": {
     "dev": "tsx watch src/server/index.ts",
     "dev:client": "vite",
-    "build": "tsc && vite build",
+    "build": "prisma generate && tsc && vite build",
     "build:client": "vite build",
     "start": "node dist/server/index.js",
+    "postinstall": "prisma generate",
     "db:migrate": "prisma migrate deploy",
     "db:generate": "prisma generate",
     "db:push": "prisma db push"
