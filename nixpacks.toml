@@ -1,0 +1,15 @@
+[phases.setup]
+nixPkgs = ["openssl", "pkg-config"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = [
+  "npx prisma generate --schema=./prisma/schema.prisma",
+  "npx prisma db push --schema=./prisma/schema.prisma --accept-data-loss",
+  "npm run build"
+]
+
+[start]
+cmd = "npm run start"
