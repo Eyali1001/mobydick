@@ -10,7 +10,8 @@
       "Bash(done)",
       "Bash(lsof:*)",
       "Bash(npm run dev:*)",
-      "Bash(npm run dev:client:*)"
+      "Bash(npm run dev:client:*)",
+      "WebFetch(domain:gamma-api.polymarket.com)"
     ]
   }
 }

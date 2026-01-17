@@ -94,7 +94,7 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                 Market
               </th>
               <th
-                className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-medium text-white/80 cursor-help hidden md:table-cell"
+                className="px-2 md:px-4 py-2 md:py-3 text-left text-xs md:text-sm font-medium text-white/80 cursor-help"
                 title="Trade direction and outcome: e.g., BUY Yes = betting the outcome happens"
               >
                 Position
@@ -155,9 +155,9 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                     {whale.marketTitle}
                   </p>
                 </td>
-                <td className="px-2 md:px-4 py-2 md:py-3 hidden md:table-cell">
+                <td className="px-2 md:px-4 py-2 md:py-3">
                   <span
-                    className={`font-medium text-sm ${whale.side === 'BUY' ? 'text-emerald-300' : 'text-rose-300'}`}
+                    className={`font-medium text-xs md:text-sm ${whale.side === 'BUY' ? 'text-emerald-300' : 'text-rose-300'}`}
                   >
                     {whale.side} {whale.outcome || ''}
                   </span>

@@ -173,14 +173,52 @@ process.on('SIGINT', async () => {
 });
 
 // Poll for real trades from Data API
-let lastTradeTimestamp = Date.now() - 60000; // Start from 1 minute ago
 const seenTransactions = new Set<string>();
+let topMarkets: Array<{ conditionId: string; title: string; volume: number }> = [];
+
+// Refresh top markets by volume periodically
+async function refreshTopMarkets() {
+  try {
+    const markets = await polymarketClient.getMarkets({ limit: 100, active: true });
+    topMarkets = markets
+      .filter(m => m.volume && m.volume > 0)
+      .sort((a, b) => (b.volume || 0) - (a.volume || 0))
+      .slice(0, 50)
+      .map(m => ({
+        conditionId: m.conditionId,
+        title: m.question || m.title || 'Unknown',
+        volume: m.volume || 0,
+      }));
+    console.log(`[MARKETS] Monitoring ${topMarkets.length} top markets by volume`);
+    if (topMarkets.length > 0) {
+      console.log(`[MARKETS] Top market: "${topMarkets[0].title}" ($${(topMarkets[0].volume / 1000000).toFixed(1)}M volume)`);
+    }
+  } catch (error) {
+    console.error('Error refreshing top markets:', error);
+  }
+}
 
 async function pollTrades() {
   try {
-    const trades = await polymarketClient.getTrades({ limit: 100 });
+    // Fetch recent trades (these come from all markets, but we also poll top markets specifically)
+    const recentTrades = await polymarketClient.getTrades({ limit: 100 });
 
-    for (const trade of trades) {
+    // Also fetch trades from top 10 markets by volume to ensure coverage
+    const topMarketTrades = await Promise.all(
+      topMarkets.slice(0, 10).map(async (market) => {
+        try {
+          const trades = await polymarketClient.getTrades({ market: market.conditionId, limit: 20 });
+          return trades;
+        } catch {
+          return [];
+        }
+      })
+    );
+
+    // Combine all trades
+    const allTrades = [...recentTrades, ...topMarketTrades.flat()];
+
+    for (const trade of allTrades) {
       // Skip if we've already seen this transaction
       if (seenTransactions.has(trade.transactionHash)) continue;
       seenTransactions.add(trade.transactionHash);
@@ -254,9 +292,13 @@ server.listen(PORT, () => {
   // Connect to Polymarket WebSocket for real-time price updates
   polymarketWs.connect();
 
+  // Refresh top markets on startup and every 5 minutes
+  refreshTopMarkets();
+  setInterval(refreshTopMarkets, 5 * 60 * 1000);
+
   // Poll for real trades every 5 seconds
   setInterval(pollTrades, 5000);
-  pollTrades(); // Initial poll
+  setTimeout(pollTrades, 2000); // Initial poll after markets load
 });
 
 export { app, server };
