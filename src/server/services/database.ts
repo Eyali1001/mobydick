@@ -14,6 +14,7 @@ export async function saveTrade(
       marketTitle: trade.marketTitle,
       assetId: trade.assetId,
       side: trade.side,
+      outcome: trade.outcome,
       size: trade.size,
       usdcSize: trade.usdcSize,
       price: trade.price,

@@ -5,6 +5,7 @@ export interface Trade {
   marketTitle: string;
   assetId: string;
   side: 'BUY' | 'SELL';
+  outcome?: string;
   size: number;
   usdcSize: number;
   price: number;

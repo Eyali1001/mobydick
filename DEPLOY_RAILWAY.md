@@ -92,6 +92,26 @@ When prompted:
 - Select **"Create new project"**
 - Give it a name like `mobydick` or `whale-detector`
 
+After creating the project, **link it to a service**:
+
+```bash
+# Link the current directory to a service
+railway link
+
+# If prompted, select the project you just created
+# Then select "Create new service" or use an existing one
+```
+
+Alternatively, create a service explicitly:
+
+```bash
+# Create a new service in the project
+railway service
+
+# Select "Create new service"
+# Name it something like "web" or "app"
+```
+
 ### Option B: Via Dashboard
 
 1. Go to [https://railway.app/dashboard](https://railway.app/dashboard)
@@ -99,6 +119,8 @@ When prompted:
 3. Select **"Deploy from GitHub repo"**
 4. Find and select `Eyali1001/mobydick`
 5. Click **"Deploy Now"**
+
+> **Note:** When deploying from GitHub via the dashboard, Railway automatically creates a service for you.
 
 ---
 
@@ -288,6 +310,28 @@ railway run npx prisma migrate deploy
 
 ## Troubleshooting
 
+### "No service linked" or "Please run railway service" error
+
+This means you need to link your local directory to a Railway service:
+
+```bash
+# Option 1: Link interactively
+railway link
+# Select your project, then select or create a service
+
+# Option 2: Create a new service
+railway service
+# Select "Create new service" and name it (e.g., "web")
+
+# Option 3: Link to specific service
+railway link --service <service-name>
+```
+
+After linking, verify with:
+```bash
+railway status
+```
+
 ### "Build failed" errors
 
 Check the build logs. Common issues:
@@ -360,8 +404,14 @@ Railway pricing (as of 2024):
 # Login
 railway login
 
+# Create new project
+railway init
+
 # Link to existing project
 railway link
+
+# Create/manage services
+railway service
 
 # Deploy
 railway up
@@ -383,6 +433,9 @@ railway domain
 
 # Check status
 railway status
+
+# List services in project
+railway service list
 ```
 
 ---

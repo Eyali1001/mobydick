@@ -5,6 +5,7 @@ interface Whale {
   id: string;
   marketTitle: string;
   side: 'BUY' | 'SELL';
+  outcome?: string;
   size: number;
   usdcSize: number;
   price: number;
@@ -36,6 +37,7 @@ interface WhaleEvent {
     transactionHash: string;
     marketTitle: string;
     side: 'BUY' | 'SELL';
+    outcome?: string;
     size: number;
     usdcSize: number;
     price: number;
@@ -88,6 +90,7 @@ export function useWebSocket() {
         id: data.trade.transactionHash,
         marketTitle: data.trade.marketTitle,
         side: data.trade.side,
+        outcome: data.trade.outcome,
         size: data.trade.size,
         usdcSize: data.trade.usdcSize,
         price: data.trade.price,
@@ -131,6 +134,7 @@ export function useWebSocket() {
             transactionHash: string;
             marketTitle: string;
             side: 'BUY' | 'SELL';
+            outcome?: string;
             size: number;
             usdcSize: number;
             price: number;
@@ -143,6 +147,7 @@ export function useWebSocket() {
             id: w.transactionHash,
             marketTitle: w.marketTitle,
             side: w.side,
+            outcome: w.outcome,
             size: w.size,
             usdcSize: w.usdcSize,
             price: w.price,

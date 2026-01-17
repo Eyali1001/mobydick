@@ -219,6 +219,7 @@ async function pollTrades() {
           marketTitle: trade.title || 'Unknown Market',
           assetId: trade.asset,
           side: trade.side,
+          outcome: trade.outcome,
           size: trade.size,
           usdcSize,
           price: trade.price,
@@ -237,7 +238,7 @@ async function pollTrades() {
         });
 
         console.log(
-          `[WHALE] ${anomaly.severity} - ${trade.side} $${usdcSize.toFixed(2)} - Z:${anomaly.zScore.toFixed(2)} - "${trade.title}"`
+          `[WHALE] ${anomaly.severity} - ${trade.side} ${trade.outcome || '?'} $${usdcSize.toFixed(2)} - Z:${anomaly.zScore.toFixed(2)} - "${trade.title}"`
         );
       }
     }
