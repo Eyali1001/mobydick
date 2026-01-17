@@ -7,13 +7,13 @@
   "scripts": {
     "dev": "tsx watch src/server/index.ts",
     "dev:client": "vite",
-    "build": "prisma generate && tsc && vite build",
+    "build": "prisma generate --schema=./prisma/schema.prisma && tsc && vite build",
     "build:client": "vite build",
     "start": "node dist/server/index.js",
-    "postinstall": "prisma generate",
-    "db:migrate": "prisma migrate deploy",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push"
+    "postinstall": "prisma generate --schema=./prisma/schema.prisma || true",
+    "db:migrate": "prisma migrate deploy --schema=./prisma/schema.prisma",
+    "db:generate": "prisma generate --schema=./prisma/schema.prisma",
+    "db:push": "prisma db push --schema=./prisma/schema.prisma"
   },
   "dependencies": {
     "@prisma/client": "^5.22.0",
