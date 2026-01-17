@@ -11,7 +11,8 @@
       "Bash(lsof:*)",
       "Bash(npm run dev:*)",
       "Bash(npm run dev:client:*)",
-      "WebFetch(domain:gamma-api.polymarket.com)"
+      "WebFetch(domain:gamma-api.polymarket.com)",
+      "Bash(git checkout:*)"
     ]
   }
 }

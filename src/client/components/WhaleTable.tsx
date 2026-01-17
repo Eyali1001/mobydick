@@ -1,4 +1,5 @@
 import { formatDistanceToNow } from 'date-fns';
+import { useState, useMemo } from 'react';
 
 interface Whale {
   id: string;
@@ -21,7 +22,56 @@ interface WhaleTableProps {
   onClear?: () => void;
 }
 
+type Category = 'All' | 'Politics' | 'Crypto' | 'Sports' | 'Entertainment' | 'Science' | 'Business' | 'Other';
+
+const CATEGORY_KEYWORDS: Record<Exclude<Category, 'All' | 'Other'>, string[]> = {
+  Politics: ['trump', 'biden', 'election', 'president', 'congress', 'senate', 'democrat', 'republican', 'governor', 'mayor', 'vote', 'primary', 'gop', 'political', 'white house', 'supreme court', 'impeach', 'cabinet', 'minister', 'parliament', 'putin', 'zelensky', 'ukraine', 'china', 'iran', 'israel', 'gaza', 'war', 'military', 'nato', 'un ', 'sanctions', 'khamenei', 'netanyahu', 'modi', 'trudeau', 'macron', 'starmer', 'xi jinping'],
+  Crypto: ['bitcoin', 'btc', 'ethereum', 'eth', 'crypto', 'solana', 'sol', 'dogecoin', 'doge', 'nft', 'defi', 'blockchain', 'binance', 'coinbase', 'token', 'altcoin', 'memecoin', 'xrp', 'cardano'],
+  Sports: ['nfl', 'nba', 'mlb', 'nhl', 'football', 'basketball', 'baseball', 'hockey', 'soccer', 'tennis', 'golf', 'ufc', 'mma', 'boxing', 'super bowl', 'world cup', 'olympics', 'championship', 'playoff', 'lakers', 'celtics', 'warriors', 'chiefs', 'eagles', 'mvp', 'premier league', 'champions league', 'fifa'],
+  Entertainment: ['oscar', 'grammy', 'emmy', 'movie', 'film', 'album', 'song', 'spotify', 'netflix', 'disney', 'celebrity', 'kardashian', 'taylor swift', 'kanye', 'drake', 'beyonce', 'tv show', 'streaming', 'youtube', 'tiktok', 'influencer', 'viral'],
+  Science: ['ai', 'artificial intelligence', 'openai', 'chatgpt', 'gpt', 'spacex', 'nasa', 'mars', 'moon', 'climate', 'fda', 'vaccine', 'covid', 'pandemic', 'research', 'scientist', 'discovery', 'medical', 'health', 'disease'],
+  Business: ['stock', 'market', 'fed', 'federal reserve', 'interest rate', 'inflation', 'recession', 'gdp', 'earnings', 'ipo', 'merger', 'acquisition', 'tesla', 'apple', 'google', 'amazon', 'microsoft', 'nvidia', 'meta', 'layoff', 'ceo', 'company', 's&p', 'dow', 'nasdaq'],
+};
+
+function inferCategory(marketTitle: string): Category {
+  const lowerTitle = marketTitle.toLowerCase();
+
+  for (const [category, keywords] of Object.entries(CATEGORY_KEYWORDS)) {
+    if (keywords.some(keyword => lowerTitle.includes(keyword))) {
+      return category as Category;
+    }
+  }
+
+  return 'Other';
+}
+
 export function WhaleTable({ whales, onClear }: WhaleTableProps) {
+  const [selectedCategory, setSelectedCategory] = useState<Category>('All');
+
+  const categories: Category[] = ['All', 'Politics', 'Crypto', 'Sports', 'Entertainment', 'Science', 'Business', 'Other'];
+
+  const filteredWhales = useMemo(() => {
+    if (selectedCategory === 'All') return whales;
+    return whales.filter(whale => inferCategory(whale.marketTitle) === selectedCategory);
+  }, [whales, selectedCategory]);
+
+  const categoryCounts = useMemo(() => {
+    const counts: Record<Category, number> = {
+      All: whales.length,
+      Politics: 0,
+      Crypto: 0,
+      Sports: 0,
+      Entertainment: 0,
+      Science: 0,
+      Business: 0,
+      Other: 0,
+    };
+    whales.forEach(whale => {
+      const cat = inferCategory(whale.marketTitle);
+      counts[cat]++;
+    });
+    return counts;
+  }, [whales]);
   const getSeverityColor = (severity: string) => {
     switch (severity) {
       case 'EXTREME':
@@ -61,20 +111,40 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
 
   return (
     <div className="bg-white/20 backdrop-blur-md rounded-xl overflow-hidden border border-white/30">
-      <div className="p-3 md:p-4 border-b border-white/20 flex items-center justify-between">
-        <h2 className="text-lg md:text-xl font-bold text-white">🐋 Recent Whale Activity</h2>
-        <div className="flex items-center gap-2 md:gap-3">
-          <span className="text-xs md:text-sm text-white/70">
-            {whales.length} detected
-          </span>
-          {onClear && whales.length > 0 && (
+      <div className="p-3 md:p-4 border-b border-white/20">
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="text-lg md:text-xl font-bold text-white">🐋 Recent Whale Activity</h2>
+          <div className="flex items-center gap-2 md:gap-3">
+            <span className="text-xs md:text-sm text-white/70">
+              {filteredWhales.length}{selectedCategory !== 'All' ? ` / ${whales.length}` : ''} detected
+            </span>
+            {onClear && whales.length > 0 && (
+              <button
+                onClick={onClear}
+                className="px-2 py-1 md:px-3 md:py-1.5 text-xs md:text-sm bg-white/10 hover:bg-white/20 text-white/80 hover:text-white rounded-lg transition-colors border border-white/20"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-wrap gap-1.5 md:gap-2">
+          {categories.map(category => (
             <button
-              onClick={onClear}
-              className="px-2 py-1 md:px-3 md:py-1.5 text-xs md:text-sm bg-white/10 hover:bg-white/20 text-white/80 hover:text-white rounded-lg transition-colors border border-white/20"
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-2 py-1 md:px-3 md:py-1.5 text-xs md:text-sm rounded-lg transition-colors ${
+                selectedCategory === category
+                  ? 'bg-white/30 text-white font-medium'
+                  : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
+              }`}
             >
-              Clear
+              {category}
+              {categoryCounts[category] > 0 && (
+                <span className="ml-1 text-white/50">({categoryCounts[category]})</span>
+              )}
             </button>
-          )}
+          ))}
         </div>
       </div>
       <div className="overflow-auto max-h-[500px]">
@@ -138,7 +208,7 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
             </tr>
           </thead>
           <tbody className="divide-y divide-white/10">
-            {whales.map((whale) => (
+            {filteredWhales.map((whale) => (
               <tr
                 key={whale.id}
                 className={`border-l-4 ${getSeverityBorder(whale.severity)} hover:bg-white/10 transition-colors`}
