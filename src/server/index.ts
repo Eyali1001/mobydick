@@ -257,11 +257,11 @@ async function pollTrades() {
       // If it's a whale trade, emit it
       if (anomaly.isAnomaly) {
         // Try to get title from trade, fallback to our market cache
-        let marketTitle = trade.title;
+        let marketTitle: string = trade.title || '';
         if (!marketTitle) {
           const cachedMarket = topMarkets.find(m => m.conditionId === trade.conditionId);
-          marketTitle = cachedMarket?.title;
-          if (marketTitle) {
+          if (cachedMarket?.title) {
+            marketTitle = cachedMarket.title;
             console.log(`[DEBUG] Trade missing title, used cache for: ${marketTitle}`);
           } else {
             console.log(`[DEBUG] Trade missing title, conditionId: ${trade.conditionId}, skipping`);
