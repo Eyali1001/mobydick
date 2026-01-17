@@ -59,6 +59,26 @@ Edit `src/server/services/anomaly.ts`:
 2. Run `npx prisma db push` (development) or `npx prisma migrate dev` (production)
 3. Run `npx prisma generate` to update the client
 
+## Git Workflow
+
+**IMPORTANT**: Never push directly to `main`/`master` branch.
+
+1. For any feature, fix, or change, create a new branch:
+   ```bash
+   git checkout -b feature/short-description
+   # or
+   git checkout -b fix/short-description
+   ```
+
+2. Make your changes and commit to the branch
+
+3. Push the branch to remote:
+   ```bash
+   git push -u origin feature/short-description
+   ```
+
+4. The user will decide whether to merge to main
+
 ## Code Conventions
 
 - **TypeScript** - All code is TypeScript, maintain type safety
