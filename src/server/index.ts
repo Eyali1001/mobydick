@@ -92,6 +92,11 @@ polymarketWs.on('trade', async (tradeData: TradeData) => {
     if (anomaly.isAnomaly) {
       const marketTitle = await getMarketTitle(tradeData.marketId);
 
+      // Skip trades with unknown market titles
+      if (marketTitle === 'Unknown Market') {
+        return;
+      }
+
       const trade: Trade = {
         transactionHash: `${tradeData.marketId}-${tradeData.timestamp.getTime()}-${Math.random().toString(36).substring(7)}`,
         marketId: tradeData.marketId,
@@ -249,12 +254,12 @@ async function pollTrades() {
         timestamp: tradeData.timestamp,
       });
 
-      // If it's a whale trade, emit it
-      if (anomaly.isAnomaly) {
+      // If it's a whale trade, emit it (skip trades without a title)
+      if (anomaly.isAnomaly && trade.title) {
         const tradeRecord: Trade = {
           transactionHash: trade.transactionHash,
           marketId: trade.conditionId,
-          marketTitle: trade.title || 'Unknown Market',
+          marketTitle: trade.title,
           assetId: trade.asset,
           side: trade.side,
           outcome: trade.outcome,
