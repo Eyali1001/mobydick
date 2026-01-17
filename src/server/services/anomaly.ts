@@ -10,10 +10,12 @@ interface TradeInput {
 export class AnomalyDetector {
   private globalTrades: number[] = [];
   private marketTrades: Map<string, number[]> = new Map();
+  private totalTradesAnalyzed: number = 0;
   private readonly GLOBAL_WINDOW = 5000;
   private readonly MARKET_WINDOW = 500;
 
   addTrade(trade: TradeInput): AnomalyResult {
+    this.totalTradesAnalyzed++;
     const { usdcSize, marketId } = trade;
 
     // Update global stats
@@ -121,7 +123,7 @@ export class AnomalyDetector {
     avgTradeSize: number;
   } {
     return {
-      globalTradeCount: this.globalTrades.length,
+      globalTradeCount: this.totalTradesAnalyzed,
       marketCount: this.marketTrades.size,
       avgTradeSize:
         this.globalTrades.length > 0
@@ -134,6 +136,7 @@ export class AnomalyDetector {
   reset(): void {
     this.globalTrades = [];
     this.marketTrades.clear();
+    this.totalTradesAnalyzed = 0;
   }
 }
 
