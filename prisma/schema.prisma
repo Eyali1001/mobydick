@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Trade {
+  id              String   @id @default(cuid())
+  transactionHash String   @unique
+  marketId        String
+  marketTitle     String
+  assetId         String
+  side            String
+  size            Float
+  usdcSize        Float
+  price           Float
+  timestamp       DateTime
+  walletAddress   String
+
+  zScore         Float?
+  percentile     Float?
+  suspicionScore Float?
+  isWhale        Boolean @default(false)
+
+  createdAt DateTime @default(now())
+
+  @@index([marketId])
+  @@index([timestamp])
+  @@index([isWhale])
+  @@index([walletAddress])
+}
+
+model Market {
+  id           String   @id
+  conditionId  String   @unique
+  title        String
+  slug         String
+  volume       Float    @default(0)
+  avgTradeSize Float    @default(0)
+  tradeCount   Int      @default(0)
+  lastUpdated  DateTime @default(now())
+
+  @@index([slug])
+}
+
+model MarketStats {
+  id           String   @id @default(cuid())
+  marketId     String
+  windowStart  DateTime
+  windowEnd    DateTime
+  meanSize     Float
+  stdDevSize   Float
+  tradeCount   Int
+  percentile95 Float
+  percentile99 Float
+
+  @@unique([marketId, windowStart])
+  @@index([marketId])
+}
+
+model Alert {
+  id           String   @id @default(cuid())
+  tradeId      String
+  marketId     String
+  severity     String
+  score        Float
+  description  String
+  acknowledged Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([severity])
+  @@index([createdAt])
+}
