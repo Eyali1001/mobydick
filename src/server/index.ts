@@ -254,12 +254,25 @@ async function pollTrades() {
         timestamp: tradeData.timestamp,
       });
 
-      // If it's a whale trade, emit it (skip trades without a title)
-      if (anomaly.isAnomaly && trade.title) {
+      // If it's a whale trade, emit it
+      if (anomaly.isAnomaly) {
+        // Try to get title from trade, fallback to our market cache
+        let marketTitle = trade.title;
+        if (!marketTitle) {
+          const cachedMarket = topMarkets.find(m => m.conditionId === trade.conditionId);
+          marketTitle = cachedMarket?.title;
+          if (marketTitle) {
+            console.log(`[DEBUG] Trade missing title, used cache for: ${marketTitle}`);
+          } else {
+            console.log(`[DEBUG] Trade missing title, conditionId: ${trade.conditionId}, skipping`);
+            continue;
+          }
+        }
+
         const tradeRecord: Trade = {
           transactionHash: trade.transactionHash,
           marketId: trade.conditionId,
-          marketTitle: trade.title,
+          marketTitle,
           assetId: trade.asset,
           side: trade.side,
           outcome: trade.outcome,
