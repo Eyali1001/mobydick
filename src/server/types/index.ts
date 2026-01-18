@@ -3,6 +3,7 @@ export interface Trade {
   transactionHash: string;
   marketId: string;
   marketTitle: string;
+  marketSlug?: string;
   assetId: string;
   side: 'BUY' | 'SELL';
   outcome?: string;

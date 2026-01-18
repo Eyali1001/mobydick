@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react';
 interface Whale {
   id: string;
   marketTitle: string;
+  marketSlug?: string;
   side: 'BUY' | 'SELL';
   outcome?: string;
   size: number;
@@ -221,9 +222,21 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                   </span>
                 </td>
                 <td className="px-2 md:px-4 py-2 md:py-3 max-w-[120px] md:max-w-xs">
-                  <p className="truncate text-xs md:text-sm text-white" title={whale.marketTitle}>
-                    {whale.marketTitle}
-                  </p>
+                  {whale.marketSlug ? (
+                    <a
+                      href={`https://polymarket.com/event/${whale.marketSlug}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="truncate text-xs md:text-sm text-white hover:text-blue-300 transition-colors block"
+                      title={whale.marketTitle}
+                    >
+                      {whale.marketTitle}
+                    </a>
+                  ) : (
+                    <p className="truncate text-xs md:text-sm text-white" title={whale.marketTitle}>
+                      {whale.marketTitle}
+                    </p>
+                  )}
                 </td>
                 <td className="px-2 md:px-4 py-2 md:py-3">
                   <span

@@ -273,6 +273,7 @@ async function pollTrades() {
           transactionHash: trade.transactionHash,
           marketId: trade.conditionId,
           marketTitle,
+          marketSlug: trade.slug,
           assetId: trade.asset,
           side: trade.side,
           outcome: trade.outcome,
