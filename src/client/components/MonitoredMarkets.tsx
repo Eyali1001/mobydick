@@ -78,60 +78,60 @@ export function MonitoredMarkets() {
   const displayedMarkets = expanded ? filteredMarkets : filteredMarkets.slice(0, 10);
 
   return (
-    <div className="bg-white/20 backdrop-blur-md rounded-xl p-3 md:p-4 mt-6 border border-white/30">
+    <div className="border border-neutral-300 rounded p-3 md:p-4 mt-6">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-base md:text-lg font-bold text-white">🎯 Monitored Markets (by volume)</h3>
-        <span className="text-xs md:text-sm text-white/70">
+        <h3 className="text-sm font-semibold text-neutral-900">Monitored Markets (by volume)</h3>
+        <span className="text-xs text-neutral-500">
           {filteredMarkets.length}{selectedCategory !== 'All' ? ` / ${markets.length}` : ''} markets
         </span>
       </div>
-      <div className="flex flex-wrap gap-1.5 md:gap-2 mb-4">
+      <div className="flex flex-wrap gap-1 mb-4">
         {categories.map(category => (
           <button
             key={category}
             onClick={() => { setSelectedCategory(category); setExpanded(false); }}
-            className={`px-2 py-1 md:px-3 md:py-1.5 text-xs md:text-sm rounded-lg transition-colors ${
+            className={`px-2 py-1 text-xs rounded transition-colors ${
               selectedCategory === category
-                ? 'bg-white/30 text-white font-medium'
-                : 'bg-white/10 text-white/70 hover:bg-white/20 hover:text-white'
+                ? 'bg-neutral-900 text-white'
+                : 'bg-neutral-200 text-neutral-600 hover:bg-neutral-300'
             }`}
           >
             {category}
             {categoryCounts[category] > 0 && (
-              <span className="ml-1 text-white/50">({categoryCounts[category]})</span>
+              <span className="ml-1 opacity-60">({categoryCounts[category]})</span>
             )}
           </button>
         ))}
       </div>
 
       {loading ? (
-        <div className="text-center py-8 text-white/60">
+        <div className="text-center py-8 text-neutral-500 text-sm">
           Loading markets...
         </div>
       ) : markets.length === 0 ? (
-        <div className="text-center py-8 text-white/60">
+        <div className="text-center py-8 text-neutral-500 text-sm">
           No markets being monitored
         </div>
       ) : (
         <>
-          <div className="space-y-2">
+          <div className="space-y-1">
             {displayedMarkets.map((market, index) => (
               <a
                 key={market.conditionId}
                 href={`https://polymarket.com/market/${market.slug}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 md:p-3 bg-white/10 hover:bg-white/20 rounded-lg transition-all border border-white/10 hover:border-white/30"
+                className="flex items-center justify-between p-2 hover:bg-neutral-100 rounded transition-colors"
               >
-                <div className="flex items-center gap-2 md:gap-3 min-w-0 flex-1">
-                  <span className="text-white/50 text-xs md:text-sm font-mono w-5 md:w-6 text-right shrink-0">
+                <div className="flex items-center gap-2 min-w-0 flex-1">
+                  <span className="text-neutral-400 text-xs font-mono w-5 text-right shrink-0">
                     {index + 1}
                   </span>
-                  <p className="text-xs md:text-sm text-white truncate" title={market.title}>
+                  <p className="text-xs text-neutral-900 truncate" title={market.title}>
                     {market.title}
                   </p>
                 </div>
-                <span className="text-xs md:text-sm text-white/60 font-mono shrink-0 ml-2">
+                <span className="text-xs text-neutral-500 font-mono shrink-0 ml-2">
                   ${(market.volume / 1000000).toFixed(1)}M
                 </span>
               </a>
@@ -141,7 +141,7 @@ export function MonitoredMarkets() {
           {filteredMarkets.length > 10 && (
             <button
               onClick={() => setExpanded(!expanded)}
-              className="mt-4 w-full py-2 md:py-2.5 text-xs md:text-sm text-white bg-white/20 hover:bg-white/30 rounded-lg transition-all border border-white/20"
+              className="mt-3 w-full py-2 text-xs text-neutral-600 border border-neutral-300 hover:border-neutral-400 rounded transition-colors"
             >
               {expanded
                 ? 'Show less'
