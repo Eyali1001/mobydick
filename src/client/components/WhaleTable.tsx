@@ -224,7 +224,7 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                 <td className="px-2 md:px-4 py-2 md:py-3 max-w-[120px] md:max-w-xs">
                   {whale.marketSlug ? (
                     <a
-                      href={`https://polymarket.com/event/${whale.marketSlug}`}
+                      href={`https://polymarket.com/market/${whale.marketSlug}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="truncate text-xs md:text-sm text-white hover:text-blue-300 transition-colors block"

@@ -34,6 +34,11 @@ app.use(express.json());
 // API routes
 app.use('/api', apiRoutes);
 
+// Top markets endpoint (defined here to avoid circular imports)
+app.get('/api/top-markets', (_req, res) => {
+  res.json(topMarkets);
+});
+
 // Health check at root for Railway
 app.get('/health', (_req, res) => {
   res.json({ status: 'healthy' });
@@ -179,7 +184,12 @@ process.on('SIGINT', async () => {
 
 // Poll for real trades from Data API
 const seenTransactions = new Set<string>();
-let topMarkets: Array<{ conditionId: string; title: string; volume: number }> = [];
+let topMarkets: Array<{ conditionId: string; title: string; slug: string; volume: number }> = [];
+
+// Expose top markets for API
+export function getTopMarkets() {
+  return topMarkets;
+}
 
 // Refresh top markets by volume periodically
 async function refreshTopMarkets() {
@@ -192,6 +202,7 @@ async function refreshTopMarkets() {
       .map(m => ({
         conditionId: m.conditionId,
         title: m.question || m.title || 'Unknown',
+        slug: m.slug || '',
         volume: m.volume || 0,
       }));
     console.log(`[MARKETS] Monitoring ${topMarkets.length} top markets by volume`);
