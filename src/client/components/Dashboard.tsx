@@ -2,16 +2,13 @@ import { WhaleTable } from './WhaleTable';
 import { WhaleInsights } from './WhaleInsights';
 import { StatsCards } from './StatsCards';
 import { MonitoredMarkets } from './MonitoredMarkets';
-import { AnimatedBackground } from './AnimatedBackground';
 import { useWebSocket } from '../hooks/useWebSocket';
 
 export function Dashboard() {
   const { whales, stats, isConnected, clearWhales } = useWebSocket();
 
   return (
-    <>
-      <AnimatedBackground />
-      <div className="relative min-h-screen text-neutral-900 p-4 md:p-8 max-w-6xl mx-auto">
+    <div className="min-h-screen text-neutral-900 p-4 md:p-8 max-w-6xl mx-auto">
         <header className="mb-6 md:mb-10 border-b border-neutral-300 pb-4">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between">
             <div>
@@ -46,6 +43,5 @@ export function Dashboard() {
           <p>Data from Polymarket. Whale detection via statistical anomaly analysis.</p>
         </footer>
       </div>
-    </>
   );
 }
