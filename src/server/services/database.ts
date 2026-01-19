@@ -12,6 +12,7 @@ export async function saveTrade(
       transactionHash: trade.transactionHash,
       marketId: trade.marketId,
       marketTitle: trade.marketTitle,
+      marketSlug: trade.marketSlug,
       assetId: trade.assetId,
       side: trade.side,
       outcome: trade.outcome,

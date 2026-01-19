@@ -222,21 +222,18 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                   </span>
                 </td>
                 <td className="px-2 md:px-4 py-2 md:py-3 max-w-[120px] md:max-w-xs">
-                  {whale.marketSlug ? (
-                    <a
-                      href={`https://polymarket.com/market/${whale.marketSlug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="truncate text-xs md:text-sm text-white hover:text-blue-300 transition-colors block"
-                      title={whale.marketTitle}
-                    >
-                      {whale.marketTitle}
-                    </a>
-                  ) : (
-                    <p className="truncate text-xs md:text-sm text-white" title={whale.marketTitle}>
-                      {whale.marketTitle}
-                    </p>
-                  )}
+                  <a
+                    href={whale.marketSlug
+                      ? `https://polymarket.com/market/${whale.marketSlug}`
+                      : `https://polymarket.com/markets?_q=${encodeURIComponent(whale.marketTitle.slice(0, 50))}`
+                    }
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="truncate text-xs md:text-sm text-white hover:text-blue-300 transition-colors block"
+                    title={whale.marketTitle}
+                  >
+                    {whale.marketTitle}
+                  </a>
                 </td>
                 <td className="px-2 md:px-4 py-2 md:py-3">
                   <span
