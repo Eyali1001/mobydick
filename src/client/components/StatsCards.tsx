@@ -51,11 +51,11 @@ export function StatsCards({ stats }: StatsCardsProps) {
       {cards.map((card) => (
         <div
           key={card.label}
-          className="border border-neutral-300 rounded px-3 py-2 md:px-4 md:py-3 cursor-help hover:border-neutral-400 transition-colors"
+          className="border border-beige-border px-3 py-2 md:px-4 md:py-3 cursor-help hover:bg-beige-dark transition-colors"
           title={card.tooltip}
         >
-          <p className="text-neutral-500 text-xs uppercase tracking-wide">{card.label}</p>
-          <p className="text-lg md:text-xl font-medium text-neutral-900 mt-0.5">{card.value}</p>
+          <p className="text-ink-muted text-xs uppercase tracking-wide font-mono">{card.label}</p>
+          <p className="text-lg md:text-xl font-medium text-ink mt-0.5 font-mono">{card.value}</p>
         </div>
       ))}
     </div>

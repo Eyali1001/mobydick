@@ -8,40 +8,34 @@ export function Dashboard() {
   const { whales, stats, isConnected, clearWhales } = useWebSocket();
 
   return (
-    <div className="min-h-screen text-neutral-900 p-4 md:p-8 max-w-6xl mx-auto">
-        <header className="mb-6 md:mb-10 border-b border-neutral-300 pb-4">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between">
-            <div>
-              <h1 className="text-xl md:text-2xl font-semibold tracking-tight">
-                Polymarket Whale Detector
-              </h1>
-              <p className="text-neutral-500 text-xs md:text-sm mt-1">
-                Real-time large trade monitoring
-              </p>
-            </div>
-            <div className="flex items-center gap-2 mt-2 md:mt-0">
-              <span
-                className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-600' : 'bg-red-500'}`}
-              />
-              <span className="text-xs text-neutral-600">
-                {isConnected ? 'Connected' : 'Disconnected'}
-              </span>
-            </div>
-          </div>
-        </header>
-
-        <StatsCards stats={stats} />
-
-        <div className="mt-6 md:mt-8 space-y-4">
-          <WhaleInsights whales={whales} />
-          <WhaleTable whales={whales} onClear={clearWhales} />
+    <div className="min-h-screen bg-beige text-ink p-6 md:px-6 md:py-12 max-w-5xl mx-auto">
+      <header className="mb-12">
+        <h1 className="text-3xl font-serif tracking-tight">Polymarket Whale Detector</h1>
+        <p className="text-ink-muted text-sm mt-1 font-mono">Real-time large trade monitoring</p>
+        <div className="flex items-center gap-2 mt-2">
+          <span
+            className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-700' : 'bg-red-600'}`}
+          />
+          <span className="text-xs text-ink-muted font-mono">
+            {isConnected ? 'Connected' : 'Disconnected'}
+          </span>
         </div>
+      </header>
 
-        <MonitoredMarkets />
+      <StatsCards stats={stats} />
 
-        <footer className="mt-10 pt-4 border-t border-neutral-300 text-center text-neutral-400 text-xs">
-          <p>Data from Polymarket. Whale detection via statistical anomaly analysis.</p>
-        </footer>
+      <div className="mt-8 space-y-6">
+        <WhaleInsights whales={whales} />
+        <WhaleTable whales={whales} onClear={clearWhales} />
       </div>
+
+      <MonitoredMarkets />
+
+      <footer className="mt-16 pt-8 border-t border-beige-border">
+        <p className="text-xs text-ink-muted font-mono">
+          Data from Polymarket. Whale detection via statistical anomaly analysis.
+        </p>
+      </footer>
+    </div>
   );
 }

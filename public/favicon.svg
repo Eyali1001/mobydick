@@ -15,7 +15,7 @@
     fill="#171717"
   />
   <!-- Eye -->
-  <circle cx="30" cy="48" r="3" fill="#f5f5dc"/>
+  <circle cx="30" cy="48" r="3" fill="#F5F0E6"/>
   <!-- Water spout -->
   <path
     d="M55 28 Q52 18 48 12 M55 28 Q58 18 55 10 M55 28 Q55 20 60 14"

@@ -63,26 +63,26 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
 
   if (whales.length === 0) {
     return (
-      <div className="border border-neutral-300 rounded p-8 text-center">
-        <p className="text-neutral-600 text-sm">No whale activity detected yet</p>
-        <p className="text-neutral-400 text-xs mt-1">Monitoring for large trades...</p>
+      <div className="border border-beige-border p-8 text-center">
+        <p className="text-ink-muted text-sm font-mono">No whale activity detected yet</p>
+        <p className="text-ink-muted text-xs mt-1 font-mono">Monitoring for large trades...</p>
       </div>
     );
   }
 
   return (
-    <div className="border border-neutral-300 rounded overflow-hidden">
-      <div className="px-4 py-3 border-b border-neutral-200 bg-neutral-50">
+    <div className="border border-beige-border overflow-hidden">
+      <div className="px-4 py-3 border-b border-beige-border bg-beige-dark">
         <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-neutral-900">Recent Whale Activity</h2>
+          <h2 className="text-base font-serif text-ink">Recent Whale Activity</h2>
           <div className="flex items-center gap-3">
-            <span className="text-xs text-neutral-500">
+            <span className="text-xs text-ink-muted font-mono">
               {filteredWhales.length}{selectedCategory !== 'All' ? ` / ${whales.length}` : ''}
             </span>
             {onClear && whales.length > 0 && (
               <button
                 onClick={onClear}
-                className="text-xs text-neutral-500 hover:text-neutral-700 underline"
+                className="text-xs text-ink-muted hover:text-ink underline font-mono"
               >
                 Clear
               </button>
@@ -94,10 +94,10 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-2 py-1 text-xs rounded transition-colors ${
+              className={`px-2 py-1 text-xs font-mono transition-colors ${
                 selectedCategory === category
-                  ? 'bg-neutral-900 text-white'
-                  : 'bg-neutral-200 text-neutral-600 hover:bg-neutral-300'
+                  ? 'bg-ink text-beige'
+                  : 'border border-beige-border text-ink-muted hover:bg-beige-dark hover:text-ink'
               }`}
             >
               {category}
@@ -109,27 +109,27 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
         </div>
       </div>
       <div className="overflow-auto max-h-[500px]">
-        <table className="w-full text-xs">
-          <thead className="bg-neutral-50 sticky top-0">
-            <tr className="border-b border-neutral-200">
-              <th className="px-3 py-2 text-left font-medium text-neutral-500 uppercase tracking-wider">Severity</th>
-              <th className="px-3 py-2 text-left font-medium text-neutral-500 uppercase tracking-wider">Market</th>
-              <th className="px-3 py-2 text-left font-medium text-neutral-500 uppercase tracking-wider">Position</th>
-              <th className="px-3 py-2 text-right font-medium text-neutral-500 uppercase tracking-wider">Size</th>
-              <th className="px-3 py-2 text-right font-medium text-neutral-500 uppercase tracking-wider hidden md:table-cell">Price</th>
-              <th className="px-3 py-2 text-right font-medium text-neutral-500 uppercase tracking-wider hidden lg:table-cell">Z-Score</th>
-              <th className="px-3 py-2 text-left font-medium text-neutral-500 uppercase tracking-wider">Time</th>
-              <th className="px-3 py-2 text-center font-medium text-neutral-500 uppercase tracking-wider">Link</th>
+        <table className="w-full text-xs font-mono">
+          <thead className="bg-beige-dark sticky top-0">
+            <tr className="border-b border-beige-border">
+              <th className="px-3 py-2 text-left font-medium text-ink-muted uppercase tracking-wider">Severity</th>
+              <th className="px-3 py-2 text-left font-medium text-ink-muted uppercase tracking-wider">Market</th>
+              <th className="px-3 py-2 text-left font-medium text-ink-muted uppercase tracking-wider">Position</th>
+              <th className="px-3 py-2 text-right font-medium text-ink-muted uppercase tracking-wider">Size</th>
+              <th className="px-3 py-2 text-right font-medium text-ink-muted uppercase tracking-wider hidden md:table-cell">Price</th>
+              <th className="px-3 py-2 text-right font-medium text-ink-muted uppercase tracking-wider hidden lg:table-cell">Z-Score</th>
+              <th className="px-3 py-2 text-left font-medium text-ink-muted uppercase tracking-wider">Time</th>
+              <th className="px-3 py-2 text-center font-medium text-ink-muted uppercase tracking-wider">Link</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-neutral-100">
+          <tbody className="divide-y divide-beige-border">
             {filteredWhales.map((whale) => (
-              <tr key={whale.id} className="hover:bg-neutral-50 transition-colors">
+              <tr key={whale.id} className="hover:bg-beige-dark transition-colors">
                 <td className="px-3 py-2">
                   <span className={`text-xs font-medium ${
-                    whale.severity === 'EXTREME' ? 'text-red-600' :
-                    whale.severity === 'HIGH' ? 'text-orange-600' :
-                    whale.severity === 'MEDIUM' ? 'text-yellow-600' : 'text-neutral-500'
+                    whale.severity === 'EXTREME' ? 'text-red-700' :
+                    whale.severity === 'HIGH' ? 'text-orange-700' :
+                    whale.severity === 'MEDIUM' ? 'text-yellow-700' : 'text-ink-muted'
                   }`}>
                     {whale.severity}
                   </span>
@@ -142,7 +142,7 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                     }
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-neutral-900 hover:text-neutral-600 truncate block"
+                    className="text-ink hover:underline truncate block"
                     title={whale.marketTitle}
                   >
                     {whale.marketTitle}
@@ -153,16 +153,16 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                     {whale.side} {whale.outcome || ''}
                   </span>
                 </td>
-                <td className="px-3 py-2 text-right font-mono text-neutral-900">
+                <td className="px-3 py-2 text-right text-ink">
                   ${whale.usdcSize.toLocaleString(undefined, { maximumFractionDigits: 0 })}
                 </td>
-                <td className="px-3 py-2 text-right font-mono text-neutral-600 hidden md:table-cell">
+                <td className="px-3 py-2 text-right text-ink-muted hidden md:table-cell">
                   {(whale.price * 100).toFixed(1)}%
                 </td>
-                <td className="px-3 py-2 text-right font-mono text-neutral-600 hidden lg:table-cell">
+                <td className="px-3 py-2 text-right text-ink-muted hidden lg:table-cell">
                   {whale.zScore.toFixed(2)}
                 </td>
-                <td className="px-3 py-2 text-neutral-500">
+                <td className="px-3 py-2 text-ink-muted">
                   {formatDistanceToNow(new Date(whale.timestamp), { addSuffix: true })}
                 </td>
                 <td className="px-3 py-2 text-center">
@@ -170,10 +170,10 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                     href={`https://polymarket.com/profile/${whale.walletAddress}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-neutral-400 hover:text-neutral-600"
+                    className="text-ink-muted hover:text-ink"
                     title="View profile"
                   >
-                    ↗
+                    View
                   </a>
                 </td>
               </tr>

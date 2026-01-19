@@ -78,10 +78,10 @@ export function MonitoredMarkets() {
   const displayedMarkets = expanded ? filteredMarkets : filteredMarkets.slice(0, 10);
 
   return (
-    <div className="border border-neutral-300 rounded p-3 md:p-4 mt-6">
+    <div className="border border-beige-border p-3 md:p-4 mt-8">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="text-sm font-semibold text-neutral-900">Monitored Markets (by volume)</h3>
-        <span className="text-xs text-neutral-500">
+        <h3 className="text-base font-serif text-ink">Monitored Markets (by volume)</h3>
+        <span className="text-xs text-ink-muted font-mono">
           {filteredMarkets.length}{selectedCategory !== 'All' ? ` / ${markets.length}` : ''} markets
         </span>
       </div>
@@ -90,10 +90,10 @@ export function MonitoredMarkets() {
           <button
             key={category}
             onClick={() => { setSelectedCategory(category); setExpanded(false); }}
-            className={`px-2 py-1 text-xs rounded transition-colors ${
+            className={`px-2 py-1 text-xs font-mono transition-colors ${
               selectedCategory === category
-                ? 'bg-neutral-900 text-white'
-                : 'bg-neutral-200 text-neutral-600 hover:bg-neutral-300'
+                ? 'bg-ink text-beige'
+                : 'border border-beige-border text-ink-muted hover:bg-beige-dark hover:text-ink'
             }`}
           >
             {category}
@@ -105,11 +105,11 @@ export function MonitoredMarkets() {
       </div>
 
       {loading ? (
-        <div className="text-center py-8 text-neutral-500 text-sm">
+        <div className="text-center py-8 text-ink-muted text-sm font-mono">
           Loading markets...
         </div>
       ) : markets.length === 0 ? (
-        <div className="text-center py-8 text-neutral-500 text-sm">
+        <div className="text-center py-8 text-ink-muted text-sm font-mono">
           No markets being monitored
         </div>
       ) : (
@@ -121,17 +121,17 @@ export function MonitoredMarkets() {
                 href={`https://polymarket.com/market/${market.slug}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-between p-2 hover:bg-neutral-100 rounded transition-colors"
+                className="flex items-center justify-between p-2 hover:bg-beige-dark transition-colors"
               >
                 <div className="flex items-center gap-2 min-w-0 flex-1">
-                  <span className="text-neutral-400 text-xs font-mono w-5 text-right shrink-0">
+                  <span className="text-ink-muted text-xs font-mono w-5 text-right shrink-0">
                     {index + 1}
                   </span>
-                  <p className="text-xs text-neutral-900 truncate" title={market.title}>
+                  <p className="text-xs text-ink font-mono truncate" title={market.title}>
                     {market.title}
                   </p>
                 </div>
-                <span className="text-xs text-neutral-500 font-mono shrink-0 ml-2">
+                <span className="text-xs text-ink-muted font-mono shrink-0 ml-2">
                   ${(market.volume / 1000000).toFixed(1)}M
                 </span>
               </a>
@@ -141,7 +141,7 @@ export function MonitoredMarkets() {
           {filteredMarkets.length > 10 && (
             <button
               onClick={() => setExpanded(!expanded)}
-              className="mt-3 w-full py-2 text-xs text-neutral-600 border border-neutral-300 hover:border-neutral-400 rounded transition-colors"
+              className="mt-3 w-full py-2 text-xs text-ink-muted font-mono border border-beige-border hover:bg-beige-dark hover:text-ink transition-colors"
             >
               {expanded
                 ? 'Show less'

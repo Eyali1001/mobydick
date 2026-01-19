@@ -27,21 +27,21 @@ export function WhaleInsights({ whales }: WhaleInsightsProps) {
   }
 
   return (
-    <div className="flex flex-wrap gap-4 text-xs text-neutral-600">
+    <div className="flex flex-wrap gap-4 text-xs text-ink-muted font-mono">
       <div className="flex items-center gap-2">
-        <span className="text-neutral-400">Severity:</span>
+        <span className="text-ink-muted">Severity:</span>
         {['LOW', 'MEDIUM', 'HIGH', 'EXTREME'].map((severity) => {
           const count = severityCounts[severity] || 0;
           if (count === 0) return null;
           return (
-            <span key={severity} className="text-neutral-700">
+            <span key={severity} className="text-ink">
               {severity} ({count})
             </span>
           );
         })}
       </div>
       <div className="flex items-center gap-2">
-        <span className="text-neutral-400">Direction:</span>
+        <span className="text-ink-muted">Direction:</span>
         <span className="text-green-700">Buy {buys}</span>
         <span className="text-red-700">Sell {sells}</span>
       </div>

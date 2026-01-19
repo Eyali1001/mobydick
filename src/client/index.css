@@ -1,9 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 body {
-  @apply bg-gray-900 text-white;
+  background-color: #F5F0E6;
+  color: #1A1A1A;
+  font-family: 'IBM Plex Mono', 'Courier New', monospace;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+::selection {
+  background-color: #1A1A1A;
+  color: #F5F0E6;
 }
 
 ::-webkit-scrollbar {
@@ -12,13 +25,14 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-800;
+  background: #EBE6DC;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-600 rounded;
+  background: #666666;
+  border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500;
+  background: #2C2C2C;
 }
