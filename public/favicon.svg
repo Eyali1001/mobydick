@@ -12,14 +12,14 @@
        Q98 45 95 40
        Q100 50 95 60
        Q98 55 92 50"
-    fill="#171717"
+    fill="#1e40af"
   />
   <!-- Eye -->
   <circle cx="30" cy="48" r="3" fill="#F5F0E6"/>
   <!-- Water spout -->
   <path
     d="M55 28 Q52 18 48 12 M55 28 Q58 18 55 10 M55 28 Q55 20 60 14"
-    stroke="#171717"
+    stroke="#1e40af"
     stroke-width="2.5"
     fill="none"
     stroke-linecap="round"
