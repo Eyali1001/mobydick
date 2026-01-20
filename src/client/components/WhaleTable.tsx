@@ -119,7 +119,8 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
               <th className="px-3 py-2 text-right font-medium text-ink-muted uppercase tracking-wider hidden md:table-cell">Price</th>
               <th className="px-3 py-2 text-right font-medium text-ink-muted uppercase tracking-wider hidden lg:table-cell">Z-Score</th>
               <th className="px-3 py-2 text-left font-medium text-ink-muted uppercase tracking-wider">Time</th>
-              <th className="px-3 py-2 text-center font-medium text-ink-muted uppercase tracking-wider">Link</th>
+              <th className="px-3 py-2 text-center font-medium text-ink-muted uppercase tracking-wider">Profile</th>
+              <th className="px-3 py-2 text-center font-medium text-blue-700 uppercase tracking-wider">Analysis</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-beige-border">
@@ -174,6 +175,17 @@ export function WhaleTable({ whales, onClear }: WhaleTableProps) {
                     title="View profile"
                   >
                     View
+                  </a>
+                </td>
+                <td className="px-3 py-2 text-center">
+                  <a
+                    href={`https://harpoon-frontend-production.up.railway.app/${whale.walletAddress}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-700 hover:text-blue-900 font-medium"
+                    title="Analyze trader"
+                  >
+                    Analyze
                   </a>
                 </td>
               </tr>

@@ -20,6 +20,14 @@ export function Dashboard() {
             {isConnected ? 'Connected' : 'Disconnected'}
           </span>
         </div>
+        <a
+          href="https://harpoon-frontend-production.up.railway.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block mt-4 text-sm font-bold text-blue-700 hover:text-blue-900 font-mono"
+        >
+          Analyze Wallets and Profiles
+        </a>
       </header>
 
       <StatsCards stats={stats} />
